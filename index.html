@@ -6,43 +6,39 @@
   <title>Energize Capital — AI Implementation Tracker</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Roboto:wght@300;400;500;600;700&display=swap');
     *{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --ec-green:#1B5E44;--ec-green-light:#E8F5EE;--ec-green-mid:#2E8B5F;
+      --ec-navy:#0a0a23;--ec-blue:#0000FF;--ec-blue-light:#eef0ff;
+      --ec-green-mid:#2E8B5F;
       --ec-teal:#0D4F6E;--ec-teal-light:#E3F2FA;
       --ec-amber:#B35A00;--ec-amber-light:#FFF3E0;
       --ec-purple:#4A2580;--ec-purple-light:#F0EBF8;
       --ec-coral:#C0392B;--ec-coral-light:#FDECEA;
-      --ec-blue:#1565C0;--ec-blue-light:#E3F0FF;
+      --ec-slate:#1565C0;--ec-slate-light:#E3F0FF;
       --ec-gray:#3D3D3A;--ec-gray-light:#F4F3EF;
       --color-text-primary:#1a1a1a;
       --color-text-secondary:#555;
       --color-text-tertiary:#999;
       --color-background-primary:#fff;
-      --color-background-secondary:#f7f7f5;
+      --color-background-secondary:#f5f5f7;
       --color-border-secondary:#ddd;
       --color-border-tertiary:#e5e5e3;
     }
-    body{font-family:'Syne',sans-serif;color:var(--color-text-primary);background:var(--color-background-secondary);min-height:100vh}
-    .page-header{background:var(--ec-green);color:#fff;padding:28px 40px 24px;display:flex;align-items:center;gap:16px}
+    body{font-family:'Roboto',sans-serif;color:var(--color-text-primary);background:var(--color-background-secondary);min-height:100vh}
+    .page-header{background:var(--ec-navy);color:#fff;padding:28px 40px 24px;display:flex;align-items:center;gap:16px}
     .page-header h1{font-size:22px;font-weight:700;letter-spacing:-0.01em}
-    .page-header span{font-size:13px;opacity:0.75;font-weight:400}
+    .page-header span{font-size:13px;opacity:0.65;font-weight:300}
     .app{max-width:1200px;margin:0 auto;padding:24px 32px 48px;background:var(--color-background-primary);min-height:calc(100vh - 80px);border-radius:0 0 12px 12px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
 
     /* Top nav */
-    .top-nav{display:flex;gap:4px;padding:16px 0 0;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:24px}
-    .top-tab{padding:10px 20px;font-size:13px;font-weight:500;border:none;background:transparent;color:var(--color-text-secondary);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-0.5px;transition:all .2s;border-radius:4px 4px 0 0;letter-spacing:0.03em;font-family:'Syne',sans-serif}
-    .top-tab.active{color:var(--ec-green);border-bottom-color:var(--ec-green);background:var(--ec-green-light)}
+    .top-nav{display:flex;gap:4px;padding:16px 0 0;border-bottom:1px solid var(--color-border-tertiary);margin-bottom:24px}
+    .top-tab{padding:10px 20px;font-size:13px;font-weight:500;border:none;background:transparent;color:var(--color-text-secondary);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;border-radius:4px 4px 0 0;letter-spacing:0.03em;font-family:'Roboto',sans-serif}
+    .top-tab.active{color:var(--ec-blue);border-bottom-color:var(--ec-blue);background:var(--ec-blue-light)}
     .top-tab:hover:not(.active){background:var(--color-background-secondary);color:var(--color-text-primary)}
 
     /* Map panel */
     .map-panel{display:none}.map-panel.active{display:block}
-
-    /* Legend */
-    .legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;padding:12px 16px;background:var(--color-background-secondary);border-radius:8px;border:0.5px solid var(--color-border-tertiary)}
-    .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary)}
-    .legend-dot{width:10px;height:10px;border-radius:50%}
 
     /* Process flow */
     .process-flow{display:flex;flex-direction:column;gap:0}
@@ -51,20 +47,20 @@
     .phase-steps{display:flex;gap:6px;flex:1;align-items:stretch;padding:6px 0}
     .step-card{flex:1;padding:10px 10px 8px;border-radius:8px;border:0.5px solid;cursor:pointer;transition:all .18s;position:relative;min-width:0}
     .step-card:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
-    .step-card.selected{box-shadow:0 0 0 2px var(--ec-green),0 4px 16px rgba(0,0,0,0.12);z-index:2}
+    .step-card.selected{box-shadow:0 0 0 2px var(--ec-blue),0 4px 16px rgba(0,0,0,0.12);z-index:2}
     .step-num{font-size:10px;font-family:'DM Mono',monospace;font-weight:500;margin-bottom:4px;opacity:0.7}
     .step-title{font-size:12px;font-weight:600;line-height:1.3;margin-bottom:3px}
     .step-sub{font-size:10px;line-height:1.4;opacity:0.75}
-    .ai-badge{position:absolute;top:6px;right:6px;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;background:var(--ec-green);color:#fff;opacity:0.85}
+    .ai-badge{position:absolute;top:6px;right:6px;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;background:var(--ec-blue);color:#fff;opacity:0.85}
     .connector{display:flex;align-items:center;justify-content:center;width:20px;flex-shrink:0;color:var(--color-text-tertiary);font-size:14px}
 
     /* Phase colors */
-    .ph-research{background:#EEF7F2;border-color:#A8D4BC;}.ph-research .step-num{color:var(--ec-green-mid)}
+    .ph-research{background:#EEF2FF;border-color:#B0BADC;}.ph-research .step-num{color:#3949AB}
     .ph-sourcing{background:#E8F4FB;border-color:#9ECDE8;}.ph-sourcing .step-num{color:var(--ec-teal)}
     .ph-eval{background:#FFF8E8;border-color:#F5D78A;}.ph-eval .step-num{color:var(--ec-amber)}
     .ph-diligence{background:#EEF0F8;border-color:#B0B8DC;}.ph-diligence .step-num{color:var(--ec-purple)}
     .ph-deal{background:#FDECEA;border-color:#F0A89A;}.ph-deal .step-num{color:var(--ec-coral)}
-    .ph-portfolio{background:#E3F0FF;border-color:#99BEF0;}.ph-portfolio .step-num{color:var(--ec-blue)}
+    .ph-portfolio{background:#E3F0FF;border-color:#99BEF0;}.ph-portfolio .step-num{color:var(--ec-slate)}
     .ph-talent{background:#F4F3EF;border-color:#C2BFB4;}.ph-talent .step-num{color:var(--ec-gray)}
 
     /* Detail panel */
@@ -78,75 +74,52 @@
     .detail-steps-list{display:flex;flex-direction:column;gap:4px}
     .detail-step-item{font-size:12px;padding:6px 10px;background:var(--color-background-secondary);border-radius:6px;line-height:1.4;color:var(--color-text-secondary)}
     .ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-    .ai-card{padding:10px 12px;border-radius:8px;border:0.5px solid;background:var(--ec-green-light);border-color:#A8D4BC}
-    .ai-card-title{font-size:12px;font-weight:600;color:var(--ec-green);margin-bottom:2px}
+    .ai-card{padding:10px 12px;border-radius:8px;border:0.5px solid;background:var(--ec-blue-light);border-color:#B0BADC}
+    .ai-card-title{font-size:12px;font-weight:600;color:var(--ec-blue);margin-bottom:2px}
     .ai-card-desc{font-size:11px;color:var(--color-text-secondary);line-height:1.4}
-    .benefit-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-    .benefit-label{font-size:11px;color:var(--color-text-secondary);width:140px;flex-shrink:0;line-height:1.3}
-    .benefit-bar-track{flex:1;height:8px;background:var(--color-background-secondary);border-radius:4px;overflow:hidden}
-    .benefit-bar-fill{height:100%;border-radius:4px;background:var(--ec-green);transition:width .6s cubic-bezier(.4,0,.2,1)}
-    .benefit-val{font-size:11px;font-weight:600;color:var(--ec-green);width:36px;text-align:right;font-family:'DM Mono',monospace}
 
-    /* Implementation status */
-    .impl-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    .impl-chip{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;display:flex;align-items:center;gap:5px}
-    .impl-chip.todo{background:#F4F3EF;color:var(--ec-gray);border:0.5px solid #C2BFB4}
-    .impl-chip.in-progress{background:var(--ec-amber-light);color:var(--ec-amber);border:0.5px solid #F5C07A}
-    .impl-chip.live{background:var(--ec-green-light);color:var(--ec-green);border:0.5px solid #A8D4BC}
-    .impl-dot{width:6px;height:6px;border-radius:50%}
-    .impl-chip.todo .impl-dot{background:#9E9C94}
-    .impl-chip.in-progress .impl-dot{background:var(--ec-amber)}
-    .impl-chip.live .impl-dot{background:var(--ec-green)}
+    /* Available tools section */
+    .tools-section{margin-top:4px}
+    .tools-grid{display:flex;flex-direction:column;gap:8px}
+    .tool-card{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:8px;border:1px dashed var(--color-border-secondary);background:var(--color-background-secondary);min-height:56px}
+    .tool-card-icon{width:32px;height:32px;border-radius:6px;background:var(--ec-navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;opacity:0.25}
+    .tool-card-body{flex:1;min-width:0}
+    .tool-card-name{font-size:12px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:2px}
+    .tool-card-desc{font-size:11px;color:var(--color-text-tertiary);line-height:1.4;font-style:italic}
+    .tool-card-link{font-size:11px;color:var(--ec-blue);text-decoration:none;font-weight:500;opacity:0.5;pointer-events:none}
+    .tools-empty-note{font-size:11px;color:var(--color-text-tertiary);font-style:italic;padding:8px 0}
 
     /* Arrow between phases */
     .phase-arrow{display:flex;align-items:center;padding:2px 0;padding-left:134px}
     .phase-arrow-line{width:24px;height:20px;position:relative}
     .phase-arrow-line::after{content:'';position:absolute;left:50%;top:0;width:1px;height:14px;background:var(--color-border-secondary)}
-    .phase-arrow-line::before{content:'▾';position:absolute;left:50%;bottom:0;transform:translateX(-50%);font-size:10px;color:var(--color-border-secondary)}
+    .phase-arrow-line::before{content:'\25BE';position:absolute;left:50%;bottom:0;transform:translateX(-50%);font-size:10px;color:var(--color-border-secondary)}
   </style>
 </head>
 <body>
   <div class="page-header">
     <h1>Energize Capital — AI Implementation Tracker</h1>
-    <span>Interactive process maps · VC & PE / Growth Equity</span>
+    <span>Interactive process maps</span>
   </div>
   <div class="app">
     <div class="top-nav">
-      <button class="top-tab active" onclick="switchMap('vc')">Venture Capital (VC)</button>
-      <button class="top-tab" onclick="switchMap('pe')">PE / Growth Equity</button>
+      <button class="top-tab active" onclick="switchMap('vc')">Ventures</button>
+      <button class="top-tab" onclick="switchMap('pe')">Endurance</button>
     </div>
 
     <!-- VC Map -->
     <div class="map-panel active" id="map-vc">
-      <div class="legend">
-        <div class="legend-item"><div class="legend-dot" style="background:#2E8B5F"></div>Research & Sourcing</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#0D6E99"></div>Deal Evaluation</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#B37A00"></div>Diligence</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#4A2580"></div>Investment Decision</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#C0392B"></div>Term Sheet & Close</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#1565C0"></div>Portfolio & Ops</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--ec-green)"></div>AI use case</div>
-      </div>
       <div class="process-flow" id="flow-vc"></div>
       <div class="detail-panel" id="detail-vc">
-        <div class="detail-empty">Select a step to see AI use cases, efficiency gains, and implementation status</div>
+        <div class="detail-empty">Select a step to see AI use cases and available tools</div>
       </div>
     </div>
 
     <!-- PE Map -->
     <div class="map-panel" id="map-pe">
-      <div class="legend">
-        <div class="legend-item"><div class="legend-dot" style="background:#2E8B5F"></div>Origination</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#0D6E99"></div>Screening & Eval</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#B37A00"></div>Full Diligence</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#4A2580"></div>Deal Structuring</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#C0392B"></div>Closing & Integration</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#1565C0"></div>Value Creation</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--ec-green)"></div>AI use case</div>
-      </div>
       <div class="process-flow" id="flow-pe"></div>
       <div class="detail-panel" id="detail-pe">
-        <div class="detail-empty">Select a step to see AI use cases, efficiency gains, and implementation status</div>
+        <div class="detail-empty">Select a step to see AI use cases and available tools</div>
       </div>
     </div>
   </div>
@@ -158,19 +131,13 @@ const vcData = [
     steps:[
       {id:"vc1",num:"01",title:"Sector & Theme Mapping",sub:"Define investment theses",ai:true,
         steps:["Define climate/energy sub-sectors of interest","Track macro tailwinds (IRA, energy transition, grid modernization)","Identify white space and emerging verticals","Benchmark against LP mandates and Energize thesis"],
-        aiUses:[{t:"Thesis synthesis",d:"LLM scans research reports, policy docs, and market data to surface emerging themes aligned with Energize's climate focus"},{t:"Trend monitoring",d:"Automated tracking of energy transition indicators, policy signals, and funding flows across target sectors"},{t:"Competitive landscape",d:"AI-driven mapping of incumbents, startups, and adjacent players within each thesis area"},{t:"TAM modeling",d:"Structured TAM model generation from natural language inputs (TAM Lab use case)"}],
-        benefits:[{l:"Research time per thesis",v:65},{l:"Analyst hours on data collection",v:70},{l:"Coverage breadth",v:80}],
-        impl:[{s:"in-progress",t:"Theme tracker"},{s:"todo",t:"TAM auto-model"},{s:"todo",t:"Policy monitor"}]},
+        aiUses:[{t:"Thesis synthesis",d:"LLM scans research reports, policy docs, and market data to surface emerging themes aligned with Energize's climate focus"},{t:"Trend monitoring",d:"Automated tracking of energy transition indicators, policy signals, and funding flows across target sectors"},{t:"Competitive landscape",d:"AI-driven mapping of incumbents, startups, and adjacent players within each thesis area"},{t:"TAM modeling",d:"Structured TAM model generation from natural language inputs (TAM Lab use case)"}]},
       {id:"vc2",num:"02",title:"Deal Sourcing",sub:"Pipeline generation",ai:true,
         steps:["Identify target companies via databases (PitchBook, Crunchbase)","Scan VC/accelerator portfolios and grant databases (ARPA-E, DOE)","Monitor accelerators, incubators, and climate tech programs","Track founder backgrounds and team signals"],
-        aiUses:[{t:"Database mining",d:"Automated scraping and scoring of PitchBook/Crunchbase against Energize criteria: sector, stage, team, geography"},{t:"Grant & SBIR tracking",d:"Monitor DOE, ARPA-E, NSF grants as leading indicators of fundable deep tech companies"},{t:"Signal aggregation",d:"Aggregate conference presentations, patent filings, and LinkedIn signals into ranked company shortlists"},{t:"Warm intro mapping",d:"Network graph analysis to find shortest path to founders through Energize's LP and advisor network"}],
-        benefits:[{l:"Pipeline volume",v:75},{l:"Time to first contact",v:50},{l:"Signal-to-noise ratio",v:60}],
-        impl:[{s:"in-progress",t:"DB scoring bot"},{s:"todo",t:"Grant radar"},{s:"todo",t:"Network mapper"}]},
+        aiUses:[{t:"Database mining",d:"Automated scraping and scoring of PitchBook/Crunchbase against Energize criteria: sector, stage, team, geography"},{t:"Grant & SBIR tracking",d:"Monitor DOE, ARPA-E, NSF grants as leading indicators of fundable deep tech companies"},{t:"Signal aggregation",d:"Aggregate conference presentations, patent filings, and LinkedIn signals into ranked company shortlists"},{t:"Warm intro mapping",d:"Network graph analysis to find shortest path to founders through Energize's LP and advisor network"}]},
       {id:"vc3",num:"03",title:"Relationship Mgmt",sub:"Founder & ecosystem",ai:true,
         steps:["Maintain CRM with founder touch points","Track LP relationship health and communication cadence","Manage advisor and co-investor network","Monitor competitive VC activity in target sectors"],
-        aiUses:[{t:"CRM auto-update",d:"Meeting notes and emails automatically parsed and synced to CRM, flagging follow-up needs and relationship gaps"},{t:"Founder sentiment",d:"Track tone and engagement across communications to identify cooling relationships before they go cold"},{t:"LP reporting automation",d:"Draft LP updates and portfolio summaries from structured data inputs"},{t:"Co-investor tracking",d:"Monitor co-investor activity, portfolio overlaps, and syndication patterns"}],
-        benefits:[{l:"CRM data currency",v:80},{l:"Relationship gap detection",v:65},{l:"LP reporting time",v:55}],
-        impl:[{s:"todo",t:"CRM auto-sync"},{s:"todo",t:"Sentiment tracker"},{s:"in-progress",t:"LP report drafter"}]}
+        aiUses:[{t:"CRM auto-update",d:"Meeting notes and emails automatically parsed and synced to CRM, flagging follow-up needs and relationship gaps"},{t:"Founder sentiment",d:"Track tone and engagement across communications to identify cooling relationships before they go cold"},{t:"LP reporting automation",d:"Draft LP updates and portfolio summaries from structured data inputs"},{t:"Co-investor tracking",d:"Monitor co-investor activity, portfolio overlaps, and syndication patterns"}]}
     ]
   },
   {
@@ -178,19 +145,13 @@ const vcData = [
     steps:[
       {id:"vc4",num:"04",title:"Initial Screen",sub:"First-pass triage",ai:true,
         steps:["Review deck and executive summary","Score against Energize investment criteria","Assess founder-market fit and team quality","Determine if climate impact thesis is aligned"],
-        aiUses:[{t:"Deck parsing",d:"Auto-extract key metrics, claims, and positioning from pitch decks; score against Energize criteria rubric"},{t:"Criteria scoring",d:"Structured evaluation scorecard auto-populated from deck, one-pagers, and founder profiles"},{t:"Climate impact screen",d:"Assess GHG reduction potential, additionality, and alignment with Energize's impact framework"},{t:"Founder research",d:"Rapid background synthesis on founders: prior exits, domain expertise, team gaps"}],
-        benefits:[{l:"Time per screen",v:70},{l:"Consistency of criteria",v:85},{l:"Volume of screens",v:80}],
-        impl:[{s:"todo",t:"Deck scorer"},{s:"todo",t:"Impact screener"},{s:"in-progress",t:"Founder profiler"}]},
+        aiUses:[{t:"Deck parsing",d:"Auto-extract key metrics, claims, and positioning from pitch decks; score against Energize criteria rubric"},{t:"Criteria scoring",d:"Structured evaluation scorecard auto-populated from deck, one-pagers, and founder profiles"},{t:"Climate impact screen",d:"Assess GHG reduction potential, additionality, and alignment with Energize's impact framework"},{t:"Founder research",d:"Rapid background synthesis on founders: prior exits, domain expertise, team gaps"}]},
       {id:"vc5",num:"05",title:"Deep Dive & IC Memo",sub:"Investment committee prep",ai:true,
         steps:["Conduct founder interviews and product demos","Build bottom-up market sizing and competitive map","Draft investment committee memo","Stress-test key assumptions and risks"],
-        aiUses:[{t:"IC memo drafting",d:"Structured IC memo auto-drafted from diligence notes, call transcripts, and financial models; analyst reviews and edits"},{t:"Market sizing",d:"Bottom-up TAM/SAM/SOM model built from verified data sources with sensitivity analysis"},{t:"Risk identification",d:"AI flags common VC failure modes (market timing, team gaps, tech risk) based on company profile"},{t:"Transcript analysis",d:"Founder call transcripts analyzed for consistency, enthusiasm signals, and red flags"}],
-        benefits:[{l:"IC memo drafting time",v:60},{l:"Market research speed",v:65},{l:"Risk coverage",v:40}],
-        impl:[{s:"todo",t:"IC memo AI"},{s:"in-progress",t:"TAM modeler"},{s:"todo",t:"Risk flagger"}]},
+        aiUses:[{t:"IC memo drafting",d:"Structured IC memo auto-drafted from diligence notes, call transcripts, and financial models; analyst reviews and edits"},{t:"Market sizing",d:"Bottom-up TAM/SAM/SOM model built from verified data sources with sensitivity analysis"},{t:"Risk identification",d:"AI flags common VC failure modes (market timing, team gaps, tech risk) based on company profile"},{t:"Transcript analysis",d:"Founder call transcripts analyzed for consistency, enthusiasm signals, and red flags"}]},
       {id:"vc6",num:"06",title:"Reference Checks",sub:"Network validation",ai:true,
         steps:["Conduct back-channel reference calls on founders","Check customer and partner references","Validate technical claims with advisors","Assess co-investor reputation and value-add"],
-        aiUses:[{t:"Reference synthesis",d:"Call notes synthesized into structured reference report highlighting patterns, concerns, and standout quotes"},{t:"Network gap analysis",d:"Identify reference sources in Energize's network for blind-spot checks outside provided references"},{t:"Customer discovery analysis",d:"AI synthesizes customer interview notes to surface common pain points and validation signals"}],
-        benefits:[{l:"Reference synthesis time",v:55},{l:"Blind spot coverage",v:40},{l:"Pattern recognition",v:50}],
-        impl:[{s:"todo",t:"Reference synthesizer"},{s:"todo",t:"Network gap tool"}]}
+        aiUses:[{t:"Reference synthesis",d:"Call notes synthesized into structured reference report highlighting patterns, concerns, and standout quotes"},{t:"Network gap analysis",d:"Identify reference sources in Energize's network for blind-spot checks outside provided references"},{t:"Customer discovery analysis",d:"AI synthesizes customer interview notes to surface common pain points and validation signals"}]}
     ]
   },
   {
@@ -198,19 +159,13 @@ const vcData = [
     steps:[
       {id:"vc7",num:"07",title:"Technical Diligence",sub:"Product & IP validation",ai:true,
         steps:["Engage technical advisors for technology review","Assess IP landscape and freedom to operate","Evaluate product roadmap credibility","Benchmark against incumbent and competitor tech"],
-        aiUses:[{t:"Patent landscape",d:"Automated patent search and FTO analysis across USPTO, EPO; flags blocking patents and white space"},{t:"Technical benchmarking",d:"AI compares technical claims against published literature and competitor specs"},{t:"Advisor matching",d:"Match technical diligence questions to the right advisor in Energize's expert network"},{t:"IP summary",d:"Synthesize patent portfolio strength, filing gaps, and prosecution risk into structured memo"}],
-        benefits:[{l:"Patent search time",v:70},{l:"Advisor briefing prep",v:60},{l:"IP risk identification",v:45}],
-        impl:[{s:"todo",t:"Patent scanner"},{s:"todo",t:"Advisor matcher"},{s:"todo",t:"IP memo drafter"}]},
+        aiUses:[{t:"Patent landscape",d:"Automated patent search and FTO analysis across USPTO, EPO; flags blocking patents and white space"},{t:"Technical benchmarking",d:"AI compares technical claims against published literature and competitor specs"},{t:"Advisor matching",d:"Match technical diligence questions to the right advisor in Energize's expert network"},{t:"IP summary",d:"Synthesize patent portfolio strength, filing gaps, and prosecution risk into structured memo"}]},
       {id:"vc8",num:"08",title:"Financial Diligence",sub:"Model & projections review",ai:true,
         steps:["Audit financial model assumptions and drivers","Benchmark unit economics against sector comps","Stress test burn rate and runway assumptions","Validate revenue recognition and customer contracts"],
-        aiUses:[{t:"Model audit",d:"Automated review of financial model for formula errors, circular references, and assumption consistency"},{t:"Comp benchmarking",d:"AI pulls comparable company metrics from databases and benchmarks against target's unit economics"},{t:"Scenario modeling",d:"Generate bear/base/bull cases with sensitivity analysis on key drivers"},{t:"Contract parsing",d:"Review customer contracts for revenue recognition flags, churn provisions, and concentration risk"}],
-        benefits:[{l:"Model review time",v:60},{l:"Comp research",v:75},{l:"Scenario build time",v:65}],
-        impl:[{s:"todo",t:"Model auditor"},{s:"in-progress",t:"Comp puller"},{s:"todo",t:"Contract parser"}]},
+        aiUses:[{t:"Model audit",d:"Automated review of financial model for formula errors, circular references, and assumption consistency"},{t:"Comp benchmarking",d:"AI pulls comparable company metrics from databases and benchmarks against target's unit economics"},{t:"Scenario modeling",d:"Generate bear/base/bull cases with sensitivity analysis on key drivers"},{t:"Contract parsing",d:"Review customer contracts for revenue recognition flags, churn provisions, and concentration risk"}]},
       {id:"vc9",num:"09",title:"Commercial Diligence",sub:"Market & customer validation",ai:true,
         steps:["Conduct primary customer discovery interviews","Map competitive dynamics and market positioning","Validate go-to-market strategy and channel fit","Assess regulatory and policy tailwinds/risks"],
-        aiUses:[{t:"Interview synthesis",d:"Synthesize customer discovery call notes into structured insight reports with sentiment scoring"},{t:"Regulatory tracking",d:"Monitor federal and state policy developments relevant to target company's market"},{t:"GTM evaluation",d:"Benchmark GTM approach against Energize's playbook and comparable company trajectories"},{t:"Competitive mapping",d:"AI-generated competitive positioning map updated as new entrants or pivots are identified"}],
-        benefits:[{l:"Customer interview synthesis",v:65},{l:"Regulatory research",v:70},{l:"GTM benchmarking",v:50}],
-        impl:[{s:"todo",t:"Synthesis tool"},{s:"todo",t:"Policy tracker"},{s:"todo",t:"GTM benchmarker"}]}
+        aiUses:[{t:"Interview synthesis",d:"Synthesize customer discovery call notes into structured insight reports with sentiment scoring"},{t:"Regulatory tracking",d:"Monitor federal and state policy developments relevant to target company's market"},{t:"GTM evaluation",d:"Benchmark GTM approach against Energize's playbook and comparable company trajectories"},{t:"Competitive mapping",d:"AI-generated competitive positioning map updated as new entrants or pivots are identified"}]}
     ]
   },
   {
@@ -218,14 +173,10 @@ const vcData = [
     steps:[
       {id:"vc10",num:"10",title:"Term Sheet & Negotiation",sub:"Proposal & structuring",ai:true,
         steps:["Draft and negotiate term sheet with founders","Align on valuation, dilution, and pro-rata rights","Negotiate board composition and protective provisions","Coordinate with co-investors on syndicate structure"],
-        aiUses:[{t:"Term sheet drafting",d:"AI-assisted term sheet generation with Energize standard terms; flags deviations from prior deals"},{t:"Precedent analysis",d:"Compare proposed terms against Energize's historical deal terms and market standards for the stage/sector"},{t:"Negotiation prep",d:"Generate negotiation scenarios and walk-aways based on valuation sensitivity analysis"},{t:"Syndicate coordination",d:"Automate co-investor communication on allocation and timeline"}],
-        benefits:[{l:"Term sheet drafting time",v:50},{l:"Precedent research",v:65},{l:"Negotiation prep time",v:45}],
-        impl:[{s:"todo",t:"Term sheet AI"},{s:"todo",t:"Precedent tool"},{s:"todo",t:"Syndicate comms"}]},
+        aiUses:[{t:"Term sheet drafting",d:"AI-assisted term sheet generation with Energize standard terms; flags deviations from prior deals"},{t:"Precedent analysis",d:"Compare proposed terms against Energize's historical deal terms and market standards for the stage/sector"},{t:"Negotiation prep",d:"Generate negotiation scenarios and walk-aways based on valuation sensitivity analysis"},{t:"Syndicate coordination",d:"Automate co-investor communication on allocation and timeline"}]},
       {id:"vc11",num:"11",title:"Legal & Close",sub:"Docs and funding",ai:true,
         steps:["Coordinate legal review of definitive documents","Manage closing conditions and reps/warranties","Execute wire and capitalization table update","File regulatory notifications (if required)"],
-        aiUses:[{t:"Document review",d:"AI reviews legal docs for non-standard provisions, missing reps, and deviations from term sheet"},{t:"Cap table modeling",d:"Auto-update pro forma cap table across all close scenarios including option pool shuffle"},{t:"Closing checklist",d:"AI-managed closing checklist with real-time status tracking and stakeholder notifications"},{t:"Regulatory screen",d:"Flag CFIUS, state securities, or other regulatory filing requirements based on deal structure"}],
-        benefits:[{l:"Document review time",v:55},{l:"Cap table errors",v:80},{l:"Close timeline",v:30}],
-        impl:[{s:"todo",t:"Doc reviewer"},{s:"todo",t:"Cap table tool"},{s:"todo",t:"Close tracker"}]}
+        aiUses:[{t:"Document review",d:"AI reviews legal docs for non-standard provisions, missing reps, and deviations from term sheet"},{t:"Cap table modeling",d:"Auto-update pro forma cap table across all close scenarios including option pool shuffle"},{t:"Closing checklist",d:"AI-managed closing checklist with real-time status tracking and stakeholder notifications"},{t:"Regulatory screen",d:"Flag CFIUS, state securities, or other regulatory filing requirements based on deal structure"}]}
     ]
   },
   {
@@ -233,19 +184,13 @@ const vcData = [
     steps:[
       {id:"vc12",num:"12",title:"Portfolio Monitoring",sub:"Performance & health tracking",ai:true,
         steps:["Collect and review monthly/quarterly KPIs","Monitor burn rate, runway, and cash position","Track product and commercial milestones","Flag at-risk companies requiring board intervention"],
-        aiUses:[{t:"KPI dashboard",d:"Automated ingestion and visualization of portfolio company KPIs from standardized reporting templates"},{t:"Risk scoring",d:"AI scores each portfolio company on financial health, milestone achievement, and market risk indicators"},{t:"Anomaly detection",d:"Flag unusual patterns in portfolio KPIs: revenue plateau, burn acceleration, churn spikes"},{t:"Benchmark comparison",d:"Compare portfolio company metrics against sector cohort benchmarks in real time"}],
-        benefits:[{l:"KPI collection time",v:75},{l:"Risk detection speed",v:65},{l:"Reporting prep time",v:60}],
-        impl:[{s:"in-progress",t:"KPI dashboard"},{s:"todo",t:"Risk scorer"},{s:"todo",t:"Anomaly detector"}]},
+        aiUses:[{t:"KPI dashboard",d:"Automated ingestion and visualization of portfolio company KPIs from standardized reporting templates"},{t:"Risk scoring",d:"AI scores each portfolio company on financial health, milestone achievement, and market risk indicators"},{t:"Anomaly detection",d:"Flag unusual patterns in portfolio KPIs: revenue plateau, burn acceleration, churn spikes"},{t:"Benchmark comparison",d:"Compare portfolio company metrics against sector cohort benchmarks in real time"}]},
       {id:"vc13",num:"13",title:"Talent & Ops Support",sub:"Value-add to portfolio cos",ai:true,
         steps:["Source executive and key hire candidates for portfolio cos","Connect portfolio companies to Energize's operator network","Facilitate peer learning across the portfolio","Support portfolio company fundraising and strategic intros"],
-        aiUses:[{t:"Exec search assist",d:"AI sourcing of executive candidates matching role specs from public profiles and Energize's talent network"},{t:"Operator matching",d:"Match portfolio company operational challenges to relevant operators in Energize's advisory network"},{t:"Portfolio networking",d:"Identify cross-portfolio collaboration opportunities: shared vendors, customers, or expertise"},{t:"Fundraise prep",d:"AI assists portfolio companies with deck review, investor targeting, and outreach sequences"}],
-        benefits:[{l:"Exec search cycle time",v:40},{l:"Network matching speed",v:60},{l:"Cross-portfolio synergies",v:35}],
-        impl:[{s:"todo",t:"Talent sourcer"},{s:"todo",t:"Operator matcher"},{s:"todo",t:"Portfolio networker"}]},
+        aiUses:[{t:"Exec search assist",d:"AI sourcing of executive candidates matching role specs from public profiles and Energize's talent network"},{t:"Operator matching",d:"Match portfolio company operational challenges to relevant operators in Energize's advisory network"},{t:"Portfolio networking",d:"Identify cross-portfolio collaboration opportunities: shared vendors, customers, or expertise"},{t:"Fundraise prep",d:"AI assists portfolio companies with deck review, investor targeting, and outreach sequences"}]},
       {id:"vc14",num:"14",title:"LP Reporting & IR",sub:"Investor relations",ai:true,
         steps:["Prepare quarterly LP reports and fund performance updates","Manage LP data room and document requests","Support fund re-up conversations with LP data","Track LP sentiment and relationship health"],
-        aiUses:[{t:"Report generation",d:"Auto-generate quarterly LP reports from structured portfolio data; analyst reviews tone and narrative"},{t:"Data room mgmt",d:"AI indexes and organizes LP data room, surfaces relevant documents for LP queries"},{t:"Performance narratives",d:"Generate portfolio company summaries and fund performance narratives from raw KPI data"},{t:"LP Q&A prep",d:"Anticipate likely LP questions based on report data and generate draft responses for review"}],
-        benefits:[{l:"Report drafting time",v:65},{l:"LP query response time",v:50},{l:"Data room accuracy",v:70}],
-        impl:[{s:"in-progress",t:"Report drafter"},{s:"todo",t:"Data room AI"},{s:"todo",t:"LP Q&A prep"}]}
+        aiUses:[{t:"Report generation",d:"Auto-generate quarterly LP reports from structured portfolio data; analyst reviews tone and narrative"},{t:"Data room mgmt",d:"AI indexes and organizes LP data room, surfaces relevant documents for LP queries"},{t:"Performance narratives",d:"Generate portfolio company summaries and fund performance narratives from raw KPI data"},{t:"LP Q&A prep",d:"Anticipate likely LP questions based on report data and generate draft responses for review"}]}
     ]
   }
 ];
@@ -256,19 +201,13 @@ const peData = [
     steps:[
       {id:"pe1",num:"01",title:"Market Origination",sub:"Deal flow generation",ai:true,
         steps:["Map target company universe in energy transition sectors","Track M&A activity, PE exits, and carve-out opportunities","Build relationships with intermediaries and bankers","Monitor management buyout and founder liquidity signals"],
-        aiUses:[{t:"Universe mapping",d:"AI-generated target lists from PitchBook, Capital IQ, and proprietary sources filtered by Energize's PE criteria: EBITDA, sector, geography"},{t:"M&A signal tracking",d:"Monitor deal announcements, corporate divestitures, and carve-out opportunities in energy/industrial sectors"},{t:"Banker relationship mgmt",d:"Track intermediary relationships, deal flow history, and engagement quality to prioritize banker outreach"},{t:"Signal scoring",d:"Score potential targets on strategic fit, financial attractiveness, and climate impact alignment"}],
-        benefits:[{l:"Target universe coverage",v:75},{l:"Origination speed",v:60},{l:"Banker engagement quality",v:45}],
-        impl:[{s:"in-progress",t:"Universe mapper"},{s:"todo",t:"M&A monitor"},{s:"todo",t:"Banker CRM"}]},
+        aiUses:[{t:"Universe mapping",d:"AI-generated target lists from PitchBook, Capital IQ, and proprietary sources filtered by Energize's PE criteria: EBITDA, sector, geography"},{t:"M&A signal tracking",d:"Monitor deal announcements, corporate divestitures, and carve-out opportunities in energy/industrial sectors"},{t:"Banker relationship mgmt",d:"Track intermediary relationships, deal flow history, and engagement quality to prioritize banker outreach"},{t:"Signal scoring",d:"Score potential targets on strategic fit, financial attractiveness, and climate impact alignment"}]},
       {id:"pe2",num:"02",title:"Proprietary Sourcing",sub:"Direct founder & mgmt outreach",ai:true,
         steps:["Identify and approach management teams directly","Develop proprietary thesis-driven outreach to founders","Leverage Energize's operator network for warm intros","Build long-term relationships with potential sellers"],
-        aiUses:[{t:"Outreach personalization",d:"Personalized outreach sequences drafted using company-specific intelligence: recent news, leadership changes, strategic milestones"},{t:"Intro path analysis",d:"Graph analysis to identify shortest network path to target management teams via Energize's LP and operator network"},{t:"Relationship scoring",d:"Track relationship depth with management teams across all touchpoints and flag priority follow-ups"},{t:"Thesis matching",d:"Match management teams to specific Energize investment theses to sharpen outreach narrative"}],
-        benefits:[{l:"Outreach personalization",v:65},{l:"Intro path identification",v:70},{l:"Response rate",v:30}],
-        impl:[{s:"todo",t:"Outreach AI"},{s:"todo",t:"Network mapper"},{s:"in-progress",t:"Rel. tracker"}]},
+        aiUses:[{t:"Outreach personalization",d:"Personalized outreach sequences drafted using company-specific intelligence: recent news, leadership changes, strategic milestones"},{t:"Intro path analysis",d:"Graph analysis to identify shortest network path to target management teams via Energize's LP and operator network"},{t:"Relationship scoring",d:"Track relationship depth with management teams across all touchpoints and flag priority follow-ups"},{t:"Thesis matching",d:"Match management teams to specific Energize investment theses to sharpen outreach narrative"}]},
       {id:"pe3",num:"03",title:"Sponsor & LP Relations",sub:"Co-invest & fund relationship",ai:true,
         steps:["Manage co-investment relationships with LPs","Track LP mandate alignment for co-invest opportunities","Communicate deal flow and portfolio updates","Coordinate with GP advisors and strategic LPs"],
-        aiUses:[{t:"LP mandate matching",d:"Match incoming deal opportunities to LP mandates and co-invest interests automatically"},{t:"Communication drafting",d:"Draft LP deal summaries and co-invest teasers from IC memos"},{t:"Engagement tracking",d:"Monitor LP engagement and relationship health across all touchpoints"},{t:"Advisory coordination",d:"Track advisor commitments, conflicts, and engagement across transactions"}],
-        benefits:[{l:"LP mandate matching speed",v:70},{l:"Communication drafting",v:55},{l:"Advisory tracking",v:60}],
-        impl:[{s:"todo",t:"LP matcher"},{s:"in-progress",t:"Comms drafter"},{s:"todo",t:"Advisory tracker"}]}
+        aiUses:[{t:"LP mandate matching",d:"Match incoming deal opportunities to LP mandates and co-invest interests automatically"},{t:"Communication drafting",d:"Draft LP deal summaries and co-invest teasers from IC memos"},{t:"Engagement tracking",d:"Monitor LP engagement and relationship health across all touchpoints"},{t:"Advisory coordination",d:"Track advisor commitments, conflicts, and engagement across transactions"}]}
     ]
   },
   {
@@ -276,19 +215,13 @@ const peData = [
     steps:[
       {id:"pe4",num:"04",title:"Initial Screen & IOI",sub:"First pass and indication",ai:true,
         steps:["Review CIM and management presentations","Screen financial profile: revenue, EBITDA, growth, capex","Assess strategic fit with Energize PE thesis","Determine if submitting an IOI or passing"],
-        aiUses:[{t:"CIM parsing",d:"Auto-extract and structure key financial metrics, business description, and investment highlights from CIM"},{t:"Financial screen",d:"Automated financial profile scoring against Energize's PE criteria: EBITDA floor, growth profile, capex intensity"},{t:"Thesis fit assessment",d:"AI scores strategic alignment with Energize's energy transition PE thesis and climate impact criteria"},{t:"IOI benchmarking",d:"Benchmark valuation and process terms against recent comparable PE transactions for IOI calibration"}],
-        benefits:[{l:"CIM review time",v:65},{l:"Screen consistency",v:80},{l:"IOI benchmarking speed",v:60}],
-        impl:[{s:"todo",t:"CIM parser"},{s:"todo",t:"Financial scorer"},{s:"in-progress",t:"Comp benchmarker"}]},
+        aiUses:[{t:"CIM parsing",d:"Auto-extract and structure key financial metrics, business description, and investment highlights from CIM"},{t:"Financial screen",d:"Automated financial profile scoring against Energize's PE criteria: EBITDA floor, growth profile, capex intensity"},{t:"Thesis fit assessment",d:"AI scores strategic alignment with Energize's energy transition PE thesis and climate impact criteria"},{t:"IOI benchmarking",d:"Benchmark valuation and process terms against recent comparable PE transactions for IOI calibration"}]},
       {id:"pe5",num:"05",title:"Management Presentations",sub:"Mgmt meet & deep dive",ai:true,
         steps:["Prepare diligence questions for management meetings","Attend management presentations and plant tours","Assess management team quality and depth","Document key takeaways and open questions"],
-        aiUses:[{t:"Question generation",d:"AI-generated diligence question lists from CIM analysis, tailored to sector and transaction type"},{t:"Meeting prep packs",d:"Automated management presentation prep packs with company background, key risks, and suggested probes"},{t:"Transcript analysis",d:"Management meeting transcripts analyzed for conviction signals, red flags, and follow-up items"},{t:"Team assessment",d:"Structured management quality scoring rubric populated from meeting notes and reference data"}],
-        benefits:[{l:"Meeting prep time",v:55},{l:"Question coverage",v:40},{l:"Takeaway documentation",v:65}],
-        impl:[{s:"todo",t:"Q generator"},{s:"todo",t:"Prep pack builder"},{s:"todo",t:"Transcript AI"}]},
+        aiUses:[{t:"Question generation",d:"AI-generated diligence question lists from CIM analysis, tailored to sector and transaction type"},{t:"Meeting prep packs",d:"Automated management presentation prep packs with company background, key risks, and suggested probes"},{t:"Transcript analysis",d:"Management meeting transcripts analyzed for conviction signals, red flags, and follow-up items"},{t:"Team assessment",d:"Structured management quality scoring rubric populated from meeting notes and reference data"}]},
       {id:"pe6",num:"06",title:"Investment Committee",sub:"IC memo and decision",ai:true,
         steps:["Draft PE investment committee memo","Present opportunity to IC with risk/return framework","Stress test entry multiple and return profile","Receive IC approval to submit bid / LOI"],
-        aiUses:[{t:"IC memo drafting",d:"Structured PE IC memo auto-drafted from diligence notes, financial models, and management meeting summaries"},{t:"IRR modeling",d:"Automated LBO return model with scenario analysis across entry multiples, EBITDA growth, and exit assumptions"},{t:"Risk framework",d:"AI populates risk register from diligence notes and flags gaps in coverage before IC presentation"},{t:"Comp transaction analysis",d:"Pull and analyze comparable PE transaction multiples, hold periods, and return profiles from databases"}],
-        benefits:[{l:"IC memo drafting time",v:60},{l:"LBO model build time",v:55},{l:"Risk coverage completeness",v:45}],
-        impl:[{s:"todo",t:"IC memo AI"},{s:"in-progress",t:"LBO modeler"},{s:"todo",t:"Risk register AI"}]}
+        aiUses:[{t:"IC memo drafting",d:"Structured PE IC memo auto-drafted from diligence notes, financial models, and management meeting summaries"},{t:"IRR modeling",d:"Automated LBO return model with scenario analysis across entry multiples, EBITDA growth, and exit assumptions"},{t:"Risk framework",d:"AI populates risk register from diligence notes and flags gaps in coverage before IC presentation"},{t:"Comp transaction analysis",d:"Pull and analyze comparable PE transaction multiples, hold periods, and return profiles from databases"}]}
     ]
   },
   {
@@ -296,24 +229,16 @@ const peData = [
     steps:[
       {id:"pe7",num:"07",title:"Commercial Diligence",sub:"Market & competitive analysis",ai:true,
         steps:["Engage commercial diligence advisor or conduct in-house","Map addressable market and competitive dynamics","Validate customer relationships and revenue quality","Assess pricing power and customer concentration risk"],
-        aiUses:[{t:"Market sizing",d:"AI-generated market model with bottom-up sizing from verified sources, benchmarked against third-party estimates"},{t:"Customer interview synthesis",d:"Synthesize commercial diligence customer interview transcripts into structured insight reports"},{t:"Competitive mapping",d:"Dynamic competitive positioning map updated from web data, earnings calls, and industry reports"},{t:"Revenue quality analysis",d:"Score revenue quality: recurring vs. transactional, customer concentration, contract term analysis"}],
-        benefits:[{l:"Commercial research time",v:60},{l:"Interview synthesis",v:70},{l:"Market sizing speed",v:65}],
-        impl:[{s:"todo",t:"Market modeler"},{s:"todo",t:"Interview synthesizer"},{s:"todo",t:"Revenue scorer"}]},
+        aiUses:[{t:"Market sizing",d:"AI-generated market model with bottom-up sizing from verified sources, benchmarked against third-party estimates"},{t:"Customer interview synthesis",d:"Synthesize commercial diligence customer interview transcripts into structured insight reports"},{t:"Competitive mapping",d:"Dynamic competitive positioning map updated from web data, earnings calls, and industry reports"},{t:"Revenue quality analysis",d:"Score revenue quality: recurring vs. transactional, customer concentration, contract term analysis"}]},
       {id:"pe8",num:"08",title:"Financial & Accounting",sub:"QoE and model build",ai:true,
         steps:["Engage QoE advisor for quality of earnings review","Build detailed LBO financial model","Analyze working capital cycle and cash conversion","Review historical financials for normalization items"],
-        aiUses:[{t:"QoE pre-work",d:"AI identifies likely normalization items and one-time adjustments from historical financials before QoE engagement"},{t:"LBO model automation",d:"Automated LBO model construction from financial data inputs; analyst calibrates assumptions and drivers"},{t:"Working capital analysis",d:"AI analyzes working capital trends and seasonality to flag cash conversion risks"},{t:"Adj. EBITDA analysis",d:"Flag and quantify EBITDA adjustments across historical periods with supporting documentation"}],
-        benefits:[{l:"QoE prep time",v:50},{l:"Model build time",v:55},{l:"Normalization coverage",v:45}],
-        impl:[{s:"todo",t:"QoE pre-work tool"},{s:"in-progress",t:"LBO automator"},{s:"todo",t:"WC analyzer"}]},
+        aiUses:[{t:"QoE pre-work",d:"AI identifies likely normalization items and one-time adjustments from historical financials before QoE engagement"},{t:"LBO model automation",d:"Automated LBO model construction from financial data inputs; analyst calibrates assumptions and drivers"},{t:"Working capital analysis",d:"AI analyzes working capital trends and seasonality to flag cash conversion risks"},{t:"Adj. EBITDA analysis",d:"Flag and quantify EBITDA adjustments across historical periods with supporting documentation"}]},
       {id:"pe9",num:"09",title:"Operational Diligence",sub:"Ops, IT & ESG review",ai:true,
         steps:["Assess operational infrastructure and efficiency","Review IT systems, cybersecurity, and data infrastructure","Conduct ESG and climate impact assessment","Identify operational improvement opportunities post-close"],
-        aiUses:[{t:"ESG scoring",d:"Automated ESG assessment against Energize's impact framework and TCFD reporting standards"},{t:"IT gap analysis",d:"Map IT infrastructure against modern SaaS stack requirements; flag technical debt and cyber risks"},{t:"Ops benchmarking",d:"Benchmark operational KPIs (margins, headcount ratios, productivity) against sector comps"},{t:"Value creation mapping",d:"AI identifies operational improvement levers from diligence data: procurement, automation, headcount optimization"}],
-        benefits:[{l:"ESG assessment time",v:65},{l:"Ops benchmarking speed",v:55},{l:"Value creation identification",v:40}],
-        impl:[{s:"todo",t:"ESG scorer"},{s:"todo",t:"IT gap tool"},{s:"todo",t:"Value mapper"}]},
+        aiUses:[{t:"ESG scoring",d:"Automated ESG assessment against Energize's impact framework and TCFD reporting standards"},{t:"IT gap analysis",d:"Map IT infrastructure against modern SaaS stack requirements; flag technical debt and cyber risks"},{t:"Ops benchmarking",d:"Benchmark operational KPIs (margins, headcount ratios, productivity) against sector comps"},{t:"Value creation mapping",d:"AI identifies operational improvement levers from diligence data: procurement, automation, headcount optimization"}]},
       {id:"pe10",num:"10",title:"Legal & Tax Diligence",sub:"Structural and liability review",ai:true,
         steps:["Engage legal counsel for legal diligence review","Conduct environmental and regulatory compliance review","Review tax structure and identify optimization opportunities","Map contingent liabilities and off-balance sheet items"],
-        aiUses:[{t:"Legal doc review",d:"AI reviews data room documents for material contracts, change-of-control provisions, and liability flags"},{t:"Environmental screening",d:"AI-assisted environmental liability screening for industrial assets: Phase I/II report analysis"},{t:"Tax structure analysis",d:"Identify tax structuring opportunities and risks from entity structure and jurisdiction analysis"},{t:"Liability mapping",d:"Auto-generate contingent liability register from legal diligence findings"}],
-        benefits:[{l:"Legal review time",v:50},{l:"Environmental screening",v:60},{l:"Liability map accuracy",v:45}],
-        impl:[{s:"todo",t:"Doc reviewer"},{s:"todo",t:"Env. screener"},{s:"todo",t:"Liability mapper"}]}
+        aiUses:[{t:"Legal doc review",d:"AI reviews data room documents for material contracts, change-of-control provisions, and liability flags"},{t:"Environmental screening",d:"AI-assisted environmental liability screening for industrial assets: Phase I/II report analysis"},{t:"Tax structure analysis",d:"Identify tax structuring opportunities and risks from entity structure and jurisdiction analysis"},{t:"Liability mapping",d:"Auto-generate contingent liability register from legal diligence findings"}]}
     ]
   },
   {
@@ -321,14 +246,10 @@ const peData = [
     steps:[
       {id:"pe11",num:"11",title:"LOI / Bid Strategy",sub:"Offer and process strategy",ai:true,
         steps:["Determine bid strategy and valuation range","Draft LOI or final bid letter","Negotiate exclusivity and process terms","Coordinate with lenders on debt financing commitment"],
-        aiUses:[{t:"Bid calibration",d:"Benchmark bid price against precedent transactions, public comps, and internal IRR thresholds"},{t:"LOI drafting",d:"AI-assisted LOI generation with Energize standard terms; flags deviations from market"},{t:"Debt market intelligence",d:"Monitor leveraged finance market conditions, covenant trends, and lender appetite in energy sector"},{t:"Scenario modeling",d:"Model returns across bid price scenarios with sensitivity to EBITDA growth and exit multiple"}],
-        benefits:[{l:"Bid research time",v:60},{l:"LOI drafting time",v:50},{l:"Debt market monitoring",v:65}],
-        impl:[{s:"todo",t:"Bid tool"},{s:"todo",t:"LOI drafter"},{s:"todo",t:"Debt monitor"}]},
+        aiUses:[{t:"Bid calibration",d:"Benchmark bid price against precedent transactions, public comps, and internal IRR thresholds"},{t:"LOI drafting",d:"AI-assisted LOI generation with Energize standard terms; flags deviations from market"},{t:"Debt market intelligence",d:"Monitor leveraged finance market conditions, covenant trends, and lender appetite in energy sector"},{t:"Scenario modeling",d:"Model returns across bid price scenarios with sensitivity to EBITDA growth and exit multiple"}]},
       {id:"pe12",num:"12",title:"SPA & Definitive Docs",sub:"Purchase agreement and close",ai:true,
         steps:["Negotiate Stock Purchase Agreement and ancillary docs","Finalize reps and warranties, MAC, and indemnification","Secure debt financing and equity co-invest","Manage closing conditions and regulatory filings"],
-        aiUses:[{t:"SPA review",d:"AI redlines SPA against Energize standard positions and prior deal precedent; flags exposure areas"},{t:"R&W risk mapping",d:"Auto-generate rep and warranty risk register from diligence findings and SPA provisions"},{t:"Debt doc review",d:"Review credit agreement provisions for covenant compliance risk and operational restrictions"},{t:"Close management",d:"AI-managed closing checklist with condition tracking and countdown to close"}],
-        benefits:[{l:"Doc review time",v:55},{l:"R&W gap coverage",v:50},{l:"Close process efficiency",v:35}],
-        impl:[{s:"todo",t:"SPA reviewer"},{s:"todo",t:"R&W mapper"},{s:"todo",t:"Close manager"}]}
+        aiUses:[{t:"SPA review",d:"AI redlines SPA against Energize standard positions and prior deal precedent; flags exposure areas"},{t:"R&W risk mapping",d:"Auto-generate rep and warranty risk register from diligence findings and SPA provisions"},{t:"Debt doc review",d:"Review credit agreement provisions for covenant compliance risk and operational restrictions"},{t:"Close management",d:"AI-managed closing checklist with condition tracking and countdown to close"}]}
     ]
   },
   {
@@ -336,24 +257,16 @@ const peData = [
     steps:[
       {id:"pe13",num:"13",title:"100-Day Plan",sub:"Integration and quick wins",ai:true,
         steps:["Execute 100-day plan post-close","Implement quick-win operational improvements","Establish board governance and reporting cadence","Onboard strategic advisors and operators"],
-        aiUses:[{t:"100-day plan builder",d:"Generate structured 100-day plan template from value creation mapping done in diligence; track completion"},{t:"Quick win prioritization",d:"AI ranks operational improvement initiatives by effort and impact using diligence data and management input"},{t:"Governance templates",d:"Generate board reporting templates and governance calendars aligned with Energize's portfolio standards"},{t:"Advisor onboarding",d:"Match portfolio company strategic needs with operators and advisors in Energize's network"}],
-        benefits:[{l:"Plan creation time",v:55},{l:"Initiative prioritization",v:45},{l:"Governance setup speed",v:50}],
-        impl:[{s:"todo",t:"100-day builder"},{s:"todo",t:"Priority ranker"},{s:"todo",t:"Gov. templates"}]},
+        aiUses:[{t:"100-day plan builder",d:"Generate structured 100-day plan template from value creation mapping done in diligence; track completion"},{t:"Quick win prioritization",d:"AI ranks operational improvement initiatives by effort and impact using diligence data and management input"},{t:"Governance templates",d:"Generate board reporting templates and governance calendars aligned with Energize's portfolio standards"},{t:"Advisor onboarding",d:"Match portfolio company strategic needs with operators and advisors in Energize's network"}]},
       {id:"pe14",num:"14",title:"Operational Value Creation",sub:"EBITDA improvement initiatives",ai:true,
         steps:["Drive revenue growth initiatives and commercial excellence","Execute procurement and cost reduction programs","Implement operational and technology improvements","Track EBITDA bridge to acquisition case"],
-        aiUses:[{t:"EBITDA bridge tracking",d:"Automated EBITDA bridge vs. acquisition case updated monthly from portfolio company reporting"},{t:"Procurement AI",d:"AI-assisted vendor benchmarking and contract optimization to identify savings opportunities"},{t:"Revenue analytics",d:"Advanced analytics on sales pipeline, pricing, and customer economics to surface growth levers"},{t:"Tech modernization",d:"AI-assisted assessment of technology modernization opportunities and vendor evaluation"}],
-        benefits:[{l:"EBITDA tracking time",v:60},{l:"Procurement savings identification",v:40},{l:"Revenue analytics speed",v:50}],
-        impl:[{s:"in-progress",t:"EBITDA tracker"},{s:"todo",t:"Procurement AI"},{s:"todo",t:"Revenue analytics"}]},
+        aiUses:[{t:"EBITDA bridge tracking",d:"Automated EBITDA bridge vs. acquisition case updated monthly from portfolio company reporting"},{t:"Procurement AI",d:"AI-assisted vendor benchmarking and contract optimization to identify savings opportunities"},{t:"Revenue analytics",d:"Advanced analytics on sales pipeline, pricing, and customer economics to surface growth levers"},{t:"Tech modernization",d:"AI-assisted assessment of technology modernization opportunities and vendor evaluation"}]},
       {id:"pe15",num:"15",title:"Talent & Leadership",sub:"Executive team optimization",ai:true,
         steps:["Assess and upgrade management team post-close","Source and recruit C-suite and VP-level additions","Implement performance management and incentive plans","Build succession plans for key roles"],
-        aiUses:[{t:"Executive sourcing",d:"AI-assisted executive search for C-suite additions: candidate identification, outreach, and track record analysis"},{t:"Org structure analysis",d:"Benchmark portfolio company org structure and span of control against sector norms"},{t:"Incentive plan modeling",d:"Model management incentive plan economics across exit scenarios"},{t:"Succession mapping",d:"AI-assisted succession planning: identify key person risk and internal development candidates"}],
-        benefits:[{l:"Executive search time",v:40},{l:"Org benchmarking speed",v:55},{l:"Incentive modeling time",v:50}],
-        impl:[{s:"todo",t:"Exec sourcer"},{s:"todo",t:"Org analyzer"},{s:"todo",t:"Incentive modeler"}]},
+        aiUses:[{t:"Executive sourcing",d:"AI-assisted executive search for C-suite additions: candidate identification, outreach, and track record analysis"},{t:"Org structure analysis",d:"Benchmark portfolio company org structure and span of control against sector norms"},{t:"Incentive plan modeling",d:"Model management incentive plan economics across exit scenarios"},{t:"Succession mapping",d:"AI-assisted succession planning: identify key person risk and internal development candidates"}]},
       {id:"pe16",num:"16",title:"Exit Preparation",sub:"Exit process and M&A",ai:true,
         steps:["Develop exit strategy: strategic sale, sponsor-to-sponsor, or IPO","Prepare CIM and management presentation for sale process","Run process with investment banker","Evaluate and negotiate bids; select buyer and close"],
-        aiUses:[{t:"Exit timing analysis",d:"AI monitors M&A market conditions, strategic buyer activity, and PE exit multiples to optimize exit timing"},{t:"CIM drafting",d:"AI-assisted CIM and teaser drafting from financial model and operational data"},{t:"Buyer universe mapping",d:"Generate and score strategic and financial buyer universe for sale process"},{t:"Bid analysis",d:"Structured analysis of management presentation feedback and bid terms across bidders"}],
-        benefits:[{l:"CIM drafting time",v:60},{l:"Buyer research",v:70},{l:"Exit timing insight",v:45}],
-        impl:[{s:"todo",t:"Exit timer"},{s:"todo",t:"CIM drafter"},{s:"todo",t:"Buyer mapper"}]}
+        aiUses:[{t:"Exit timing analysis",d:"AI monitors M&A market conditions, strategic buyer activity, and PE exit multiples to optimize exit timing"},{t:"CIM drafting",d:"AI-assisted CIM and teaser drafting from financial model and operational data"},{t:"Buyer universe mapping",d:"Generate and score strategic and financial buyer universe for sale process"},{t:"Bid analysis",d:"Structured analysis of management presentation feedback and bid terms across bidders"}]}
     ]
   }
 ];
@@ -409,11 +322,11 @@ function selectStep(step, mapId) {
   selectedStep = step.id;
 
   const phaseColor = {
-    'ph-research':'background:var(--ec-green-light);color:var(--ec-green)',
+    'ph-research':'background:var(--ec-blue-light);color:#3949AB',
     'ph-eval':'background:var(--ec-amber-light);color:var(--ec-amber)',
     'ph-diligence':'background:var(--ec-purple-light);color:var(--ec-purple)',
     'ph-deal':'background:var(--ec-coral-light);color:var(--ec-coral)',
-    'ph-portfolio':'background:var(--ec-blue-light);color:var(--ec-blue)',
+    'ph-portfolio':'background:var(--ec-slate-light);color:var(--ec-slate)',
     'ph-sourcing':'background:var(--ec-teal-light);color:var(--ec-teal)',
     'ph-talent':'background:var(--ec-gray-light);color:var(--ec-gray)'
   };
@@ -423,7 +336,6 @@ function selectStep(step, mapId) {
   const badgeStyle = phaseRef ? (phaseColor[phaseRef.color]||'') : '';
 
   const detail = document.getElementById('detail-' + mapId);
-  const statusLabels = {todo:'Planned',live:'Live','in-progress':'In progress'};
 
   detail.innerHTML = `
     <div class="detail-header">
@@ -438,25 +350,34 @@ function selectStep(step, mapId) {
             ${step.steps.map(s=>`<div class="detail-step-item">${s}</div>`).join('')}
           </div>
         </div>
-        <div class="detail-section">
-          <div class="detail-section-label">Efficiency Gains from AI</div>
-          ${step.benefits.map(b=>`
-            <div class="benefit-bar-row">
-              <div class="benefit-label">${b.l}</div>
-              <div class="benefit-bar-track"><div class="benefit-bar-fill" style="width:${b.v}%"></div></div>
-              <div class="benefit-val">${b.v}%</div>
-            </div>
-          `).join('')}
-        </div>
-        <div class="detail-section">
-          <div class="detail-section-label">Implementation Status</div>
-          <div class="impl-grid">
-            ${step.impl.map(i=>`
-              <div class="impl-chip ${i.s}">
-                <div class="impl-dot"></div>
-                ${i.t} \u00b7 ${statusLabels[i.s]||i.s}
+        <div class="detail-section tools-section">
+          <div class="detail-section-label">Available Tools</div>
+          <div class="tools-empty-note">Tools and products will be listed here as they become available company-wide.</div>
+          <div class="tools-grid">
+            <div class="tool-card">
+              <div class="tool-card-icon">1</div>
+              <div class="tool-card-body">
+                <div class="tool-card-name">Tool name</div>
+                <div class="tool-card-desc">Description of how this tool can be used for this workflow step.</div>
+                <a class="tool-card-link" href="#">Open tool &rarr;</a>
               </div>
-            `).join('')}
+            </div>
+            <div class="tool-card">
+              <div class="tool-card-icon">2</div>
+              <div class="tool-card-body">
+                <div class="tool-card-name">Tool name</div>
+                <div class="tool-card-desc">Description of how this tool can be used for this workflow step.</div>
+                <a class="tool-card-link" href="#">Open tool &rarr;</a>
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-card-icon">3</div>
+              <div class="tool-card-body">
+                <div class="tool-card-name">Tool name</div>
+                <div class="tool-card-desc">Description of how this tool can be used for this workflow step.</div>
+                <a class="tool-card-link" href="#">Open tool &rarr;</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -475,13 +396,6 @@ function selectStep(step, mapId) {
       </div>
     </div>
   `;
-  setTimeout(()=>{
-    detail.querySelectorAll('.benefit-bar-fill').forEach(b=>{
-      const w = b.style.width;
-      b.style.width='0';
-      requestAnimationFrame(()=>{ b.style.width=w; });
-    });
-  },50);
 }
 
 function switchMap(mapId) {
