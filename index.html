@@ -51,7 +51,7 @@
     .step-num{font-size:10px;font-family:'DM Mono',monospace;font-weight:500;margin-bottom:4px;opacity:0.7}
     .step-title{font-size:12px;font-weight:600;line-height:1.3;margin-bottom:3px}
     .step-sub{font-size:10px;line-height:1.4;opacity:0.75}
-    .ai-badge{position:absolute;top:6px;right:6px;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;background:var(--ec-blue);color:#fff;opacity:0.85}
+    .ai-badge{display:none}
     .connector{display:flex;align-items:center;justify-content:center;width:20px;flex-shrink:0;color:var(--color-text-tertiary);font-size:14px}
 
     /* Phase colors */
@@ -89,6 +89,37 @@
     .tool-card-link{font-size:11px;color:var(--ec-blue);text-decoration:none;font-weight:500;opacity:0.5;pointer-events:none}
     .tools-empty-note{font-size:11px;color:var(--color-text-tertiary);font-style:italic;padding:8px 0}
 
+    /* General tools tab */
+    .general-tools-panel{padding:8px 0}
+    .general-tools-intro{font-size:13px;color:var(--color-text-secondary);margin-bottom:20px;line-height:1.6}
+    .general-tools-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    .general-tool-card{display:flex;align-items:flex-start;gap:12px;padding:16px;border-radius:10px;border:1px dashed var(--color-border-secondary);background:var(--color-background-secondary);min-height:80px}
+    .general-tool-card .tool-card-icon{width:36px;height:36px;border-radius:8px;background:var(--ec-navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;opacity:0.25}
+    .general-tool-card .tool-card-body{flex:1;min-width:0}
+    .general-tool-card .tool-card-name{font-size:13px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:4px}
+    .general-tool-card .tool-card-desc{font-size:11px;color:var(--color-text-tertiary);line-height:1.5;font-style:italic}
+    .general-tool-card .tool-card-link{display:inline-block;margin-top:6px;font-size:11px;color:var(--ec-blue);text-decoration:none;font-weight:500;opacity:0.5;pointer-events:none}
+
+    /* Evaluation framework tab */
+    .eval-panel{padding:8px 0}
+    .eval-philosophy{font-size:13px;color:var(--color-text-secondary);line-height:1.75;margin-bottom:32px;max-width:900px}
+    .eval-framework{max-width:720px;margin:0 auto}
+    .eval-step{padding:16px 20px;border-radius:10px;background:var(--ec-blue-light);border:0.5px solid #B0BADC;margin-bottom:0}
+    .eval-step-title{font-size:14px;font-weight:600;color:var(--ec-navy);margin-bottom:6px}
+    .eval-step-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+    .eval-arrow{display:flex;justify-content:center;padding:4px 0;color:var(--color-border-secondary);font-size:18px}
+    .eval-decision{display:flex;justify-content:center;margin:0 auto;padding:20px 0}
+    .eval-diamond{width:240px;height:100px;position:relative;display:flex;align-items:center;justify-content:center;text-align:center}
+    .eval-diamond::before{content:'';position:absolute;inset:0;background:var(--color-background-primary);border:1px solid #999;transform:rotate(0deg);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);z-index:0}
+    .eval-diamond span{position:relative;z-index:1;font-size:13px;font-weight:600;color:var(--color-text-primary);line-height:1.3}
+    .eval-outcomes{display:flex;justify-content:space-between;max-width:600px;margin:0 auto;gap:40px}
+    .eval-outcome{flex:1;text-align:center}
+    .eval-outcome-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px}
+    .eval-outcome-box{padding:12px 20px;border-radius:8px;font-size:14px;font-weight:600;margin-bottom:8px}
+    .eval-outcome-box.adopt{background:#eaf3de;border:0.5px solid #3b6d11;color:#27500a}
+    .eval-outcome-box.pass{background:#faece7;border:0.5px solid #993c1d;color:#712b13}
+    .eval-outcome-note{font-size:11px;color:var(--color-text-tertiary);line-height:1.5}
+
     /* Arrow between phases */
     .phase-arrow{display:flex;align-items:center;padding:2px 0;padding-left:134px}
     .phase-arrow-line{width:24px;height:20px;position:relative}
@@ -105,6 +136,8 @@
     <div class="top-nav">
       <button class="top-tab active" onclick="switchMap('vc')">Ventures</button>
       <button class="top-tab" onclick="switchMap('pe')">Endurance</button>
+      <button class="top-tab" onclick="switchMap('general')">General</button>
+      <button class="top-tab" onclick="switchMap('eval')">Evaluation Framework</button>
     </div>
 
     <!-- VC Map -->
@@ -120,6 +153,115 @@
       <div class="process-flow" id="flow-pe"></div>
       <div class="detail-panel" id="detail-pe">
         <div class="detail-empty">Select a step to see AI use cases and available tools</div>
+      </div>
+    </div>
+
+    <!-- General Tab -->
+    <div class="map-panel" id="map-general">
+      <div class="general-tools-panel">
+        <p class="general-tools-intro">Company-wide AI tools available to all Energize Capital team members. These products are approved for use across Ventures, Endurance, and general operations.</p>
+        <div class="general-tools-grid">
+          <div class="general-tool-card">
+            <div class="tool-card-icon">1</div>
+            <div class="tool-card-body">
+              <div class="tool-card-name">Tool name</div>
+              <div class="tool-card-desc">Description of how this tool can be used across the firm.</div>
+              <a class="tool-card-link" href="#">Open tool &rarr;</a>
+            </div>
+          </div>
+          <div class="general-tool-card">
+            <div class="tool-card-icon">2</div>
+            <div class="tool-card-body">
+              <div class="tool-card-name">Tool name</div>
+              <div class="tool-card-desc">Description of how this tool can be used across the firm.</div>
+              <a class="tool-card-link" href="#">Open tool &rarr;</a>
+            </div>
+          </div>
+          <div class="general-tool-card">
+            <div class="tool-card-icon">3</div>
+            <div class="tool-card-body">
+              <div class="tool-card-name">Tool name</div>
+              <div class="tool-card-desc">Description of how this tool can be used across the firm.</div>
+              <a class="tool-card-link" href="#">Open tool &rarr;</a>
+            </div>
+          </div>
+          <div class="general-tool-card">
+            <div class="tool-card-icon">4</div>
+            <div class="tool-card-body">
+              <div class="tool-card-name">Tool name</div>
+              <div class="tool-card-desc">Description of how this tool can be used across the firm.</div>
+              <a class="tool-card-link" href="#">Open tool &rarr;</a>
+            </div>
+          </div>
+          <div class="general-tool-card">
+            <div class="tool-card-icon">5</div>
+            <div class="tool-card-body">
+              <div class="tool-card-name">Tool name</div>
+              <div class="tool-card-desc">Description of how this tool can be used across the firm.</div>
+              <a class="tool-card-link" href="#">Open tool &rarr;</a>
+            </div>
+          </div>
+          <div class="general-tool-card">
+            <div class="tool-card-icon">6</div>
+            <div class="tool-card-body">
+              <div class="tool-card-name">Tool name</div>
+              <div class="tool-card-desc">Description of how this tool can be used across the firm.</div>
+              <a class="tool-card-link" href="#">Open tool &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Evaluation Framework Tab -->
+    <div class="map-panel" id="map-eval">
+      <div class="eval-panel">
+        <p class="eval-philosophy">Energize Capital operates at the intersection of capital and innovation, and that orientation extends to how we run our own firm. We approach AI adoption the same way we approach investing: with rigor, selectivity, and a clear view of where value is actually created. Rather than deploying tools broadly or reactively, we evaluate AI with discipline, targeting specific process components where the improvement in speed, accuracy, or output quality is demonstrable. The tools that earn a place in our workflow are the ones that make us sharper — better at sourcing, more precise in our analysis, and more effective at driving performance across our portfolio.</p>
+
+        <div class="eval-framework">
+          <div class="eval-step">
+            <div class="eval-step-title">Step 1 — Map the current process</div>
+            <div class="eval-step-desc">Define and document each component of the process under review. Who is involved? What inputs and outputs exist? Where do handoffs occur? Identify where friction, delays, or inconsistency most frequently arise.</div>
+          </div>
+          <div class="eval-arrow">&#9662;</div>
+          <div class="eval-step">
+            <div class="eval-step-title">Step 2 — Baseline time and cost</div>
+            <div class="eval-step-desc">Quantify the current cost to produce a single quality output or result. Measure in hours per output, labor cost per output, or error rate. Establish a clear, measurable benchmark before any tool is introduced.</div>
+          </div>
+          <div class="eval-arrow">&#9662;</div>
+          <div class="eval-step">
+            <div class="eval-step-title">Step 3 — Assess the tool's marginal improvement</div>
+            <div class="eval-step-desc">Identify precisely which part of the process the tool addresses. Estimate the new time and cost per output with the tool in place. Express the delta clearly: e.g., 4 hrs &rarr; 1 hr per output, or $200 &rarr; $60 per task.</div>
+          </div>
+          <div class="eval-arrow">&#9662;</div>
+          <div class="eval-step">
+            <div class="eval-step-title">Step 4 — Determine scale of impact</div>
+            <div class="eval-step-desc">How many team members would benefit from this tool? How frequently is this process run — daily, weekly, per deal? Multiply marginal gain by frequency and headcount to estimate total impact.</div>
+          </div>
+          <div class="eval-arrow">&#9662;</div>
+          <div class="eval-step">
+            <div class="eval-step-title">Step 5 — Review external user feedback</div>
+            <div class="eval-step-desc">What do verified users of this tool report about its real-world performance? Seek reviews from firms with similar workflows or deal volume. Prioritize substantive feedback over marketing claims or vendor case studies.</div>
+          </div>
+          <div class="eval-arrow">&#9662;</div>
+
+          <div class="eval-decision">
+            <div class="eval-diamond"><span>Does the tool deliver<br>material improvement?</span></div>
+          </div>
+
+          <div class="eval-outcomes">
+            <div class="eval-outcome">
+              <div class="eval-outcome-label">No</div>
+              <div class="eval-outcome-box pass">Pass</div>
+              <div class="eval-outcome-note">Document rationale and revisit if tool materially improves</div>
+            </div>
+            <div class="eval-outcome">
+              <div class="eval-outcome-label">Yes</div>
+              <div class="eval-outcome-box adopt">Adopt</div>
+              <div class="eval-outcome-note">Implement with defined success metrics and a review checkpoint</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
